@@ -1,0 +1,122 @@
+{
+  "id": "automation.wechat_push",
+  "name": "微信推送通知自动化",
+  "version": "1.1.0",
+  "category": "automation",
+  "description": "监听任务和系统事件，通过微信推送服务（wechat.powerautomate.top）将通知消息实时推送到微信，适用于个人即时告警和任务状态提醒。",
+  "author": "T3FAP Community",
+  "homepage": "https://wechat.powerautomate.top",
+  "license": "MIT",
+  "core_version": ">=1.0.0 <2.0.0",
+  "contract_version": "1.0",
+  "capabilities": [
+    "automation.event_handler",
+    "notification.wechat_push",
+    "notification.test"
+  ],
+  "backend": {
+    "entry": "backend.plugin:plugin"
+  },
+  "permissions": [
+    "network",
+    "secret.read"
+  ],
+  "dependencies": [],
+  "optional_dependencies": [],
+  "config_schema": [
+    {
+      "key": "enabled",
+      "label": "启用插件",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "是否启用微信推送通知自动化。",
+      "secret": false,
+      "group": "基础设置"
+    },
+    {
+      "key": "uid",
+      "label": "微信推送 UID",
+      "type": "string",
+      "required": true,
+      "default": "",
+      "description": "在 wechat.powerautomate.top 获取的唯一推送 UID，用于标识消息接收方。",
+      "secret": true,
+      "group": "基础设置"
+    },
+    {
+      "key": "push_url",
+      "label": "推送接口地址",
+      "type": "string",
+      "required": false,
+      "default": "https://wechat.powerautomate.top/api/push",
+      "description": "微信推送服务的 API 接口地址，默认使用官方地址，可替换为自建反代。",
+      "secret": false,
+      "group": "基础设置"
+    },
+    {
+      "key": "title_prefix",
+      "label": "消息标题前缀",
+      "type": "string",
+      "required": false,
+      "default": "[T3FAP]",
+      "description": "推送到微信的消息标题统一前缀，便于在微信中快速识别来源。",
+      "secret": false,
+      "group": "通知设置"
+    },
+    {
+      "key": "enabled_events",
+      "label": "启用事件列表",
+      "type": "string",
+      "required": false,
+      "default": "task.completed,task.failed",
+      "description": "需要发送通知的事件类型列表，多个值用英文逗号分隔。支持 task.completed、task.failed、task.started、resource.found、system.warning 等。",
+      "secret": false,
+      "group": "通知设置"
+    },
+    {
+      "key": "include_detail",
+      "label": "推送详细内容",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "是否在推送内容中包含事件的完整详细信息（任务名、摘要、错误信息等）。",
+      "secret": false,
+      "group": "通知设置"
+    },
+    {
+      "key": "timeout_seconds",
+      "label": "请求超时时间",
+      "type": "integer",
+      "required": false,
+      "default": 10,
+      "description": "向微信推送服务发送请求的超时时间，单位为秒。",
+      "secret": false,
+      "group": "高级设置"
+    },
+    {
+      "key": "retry_count",
+      "label": "失败重试次数",
+      "type": "integer",
+      "required": false,
+      "default": 2,
+      "description": "推送失败时的自动重试次数，0 表示不重试。",
+      "secret": false,
+      "group": "高级设置"
+    }
+  ],
+  "ui": {
+    "menus": [],
+    "settings_sections": [
+      {
+        "key": "notification.wechat_push",
+        "title": "微信推送通知"
+      }
+    ],
+    "task_templates": []
+  },
+  "healthcheck": {
+    "enabled": true,
+    "interval_seconds": 300
+  }
+}
