@@ -1,0 +1,104 @@
+{
+  "id": "automation.wechat_pushplus",
+  "name": "PushPlus 微信消息通知",
+  "version": "0.1.0",
+  "category": "automation",
+  "description": "监听任务和系统事件，通过 PushPlus（推送加）将消息发送到你的个人微信，免费、简单、无需企业微信账号。",
+  "author": "Senior Developer",
+  "license": "MIT",
+  "core_version": ">=1.0.0 <2.0.0",
+  "contract_version": "1.0",
+  "capabilities": [
+    "automation.event_handler",
+    "notification.wechat"
+  ],
+  "backend": {
+    "entry": "backend.plugin:plugin"
+  },
+  "permissions": [
+    "network",
+    "secret.read"
+  ],
+  "dependencies": [],
+  "optional_dependencies": [],
+  "config_schema": [
+    {
+      "key": "enabled",
+      "label": "启用插件",
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "是否启用 PushPlus 微信消息通知。",
+      "secret": false,
+      "group": "基础设置"
+    },
+    {
+      "key": "token",
+      "label": "PushPlus Token",
+      "type": "string",
+      "required": true,
+      "default": "",
+      "description": "在 pushplus.plus 注册后获得的 token。",
+      "secret": true,
+      "group": "基础设置"
+    },
+    {
+      "key": "title_prefix",
+      "label": "消息标题前缀",
+      "type": "string",
+      "required": false,
+      "default": "[T3FAP]",
+      "description": "微信推送消息的标题前缀。",
+      "secret": false,
+      "group": "通知设置"
+    },
+    {
+      "key": "enabled_events",
+      "label": "监听事件",
+      "type": "string",
+      "required": false,
+      "default": "task.completed,task.failed",
+      "description": "需要发送通知的事件类型，多个值用英文逗号分隔。",
+      "secret": false,
+      "group": "通知设置"
+    },
+    {
+      "key": "template",
+      "label": "消息模板",
+      "type": "select",
+      "required": false,
+      "default": "html",
+      "options": [
+        {"label": "HTML", "value": "html"},
+        {"label": "Markdown", "value": "markdown"},
+        {"label": "纯文本", "value": "txt"}
+      ],
+      "secret": false,
+      "group": "高级设置"
+    },
+    {
+      "key": "timeout_seconds",
+      "label": "请求超时时间（秒）",
+      "type": "integer",
+      "required": false,
+      "default": 10,
+      "description": "向 PushPlus 发送请求的超时时间。",
+      "secret": false,
+      "group": "高级设置"
+    }
+  ],
+  "ui": {
+    "menus": [],
+    "settings_sections": [
+      {
+        "key": "notification.wechat",
+        "title": "PushPlus 微信消息通知"
+      }
+    ],
+    "task_templates": []
+  },
+  "healthcheck": {
+    "enabled": true,
+    "interval_seconds": 300
+  }
+}
